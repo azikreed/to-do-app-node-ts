@@ -4,7 +4,13 @@
   "description": "",
   "main": "main.js",
   "type": "commonjs",
-  "scripts": {},
+  "scripts": {
+    "start": "node ./dist/main.js",
+    "dev": "nodemon",
+    "build": "tsc",
+    "lint": "eslint ./src/**",
+    "lint:fix": "eslint ./src/** --fix"
+  },
   "keywords": [],
   "author": "Ali Abdullayev",
   "license": "ISC",
