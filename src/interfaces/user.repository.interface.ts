@@ -3,5 +3,5 @@ import { IUserModel } from './user.model.interface';
 
 export interface IUserRepository {
 	create: (user: User) => Promise<IUserModel>;
-	find: (email: String) => Promise<IUserModel | null>;
+	find: (email: string) => Promise<IUserModel | null>;
 }
