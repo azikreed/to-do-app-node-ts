@@ -1,4 +1,4 @@
-import { inject } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { IUserService } from '../interfaces/user.service.interface';
 import { TYPES } from '../types';
 import { IConfigService } from '../interfaces/config.interface';
@@ -8,6 +8,7 @@ import { User } from '../entities/user.entity';
 import { IUserRepository } from '../interfaces/user.repository.interface';
 import { UserLoginDto } from './dto/user-login.dto';
 
+@injectable()
 export class UserService implements IUserService {
 	constructor(
 		@inject(TYPES.ConfigService) private configService: IConfigService,
