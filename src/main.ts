@@ -8,11 +8,20 @@ import { App } from './app';
 import { IConfigService } from './interfaces/config.interface';
 import { ConfigService } from './helpers/config/config.service';
 import { MongoService } from './services/db.service';
+import { UserController } from './controllers/user.controller';
+import { IUserController } from './interfaces/user.controller.interface';
+import { UserService } from './services/user.service';
+import { IUserService } from './interfaces/user.service.interface';
+import { UserRepository } from './repositories/user.repository';
+import { IUserRepository } from './interfaces/user.repository.interface';
 
 const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ILogger>(TYPES.LoggerService).to(LoggerService).inSingletonScope();
 	bind<IExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter);
+	bind<IUserController>(TYPES.UserController).to(UserController);
+	bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
 	bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();
+	bind<IUserService>(TYPES.UserService).to(UserService).inSingletonScope();
 	bind<MongoService>(TYPES.MongoService).to(MongoService).inSingletonScope();
 	bind<App>(TYPES.Application).to(App);
 });
