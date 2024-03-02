@@ -8,6 +8,9 @@ import { IExceptionFilter } from './interfaces/exception.filter.interface';
 import 'reflect-metadata';
 import { IConfigService } from './interfaces/config.interface';
 import { MongoService } from './services/db.service';
+import { IUserController } from './interfaces/user.controller.interface';
+import { UserController } from './controllers/user.controller';
+import { IUserService } from './interfaces/user.service.interface';
 @injectable()
 export class App {
 	app: Express;
@@ -18,7 +21,9 @@ export class App {
 		@inject(TYPES.LoggerService) private logger: ILogger,
 		@inject(TYPES.ExceptionFilter) private exceptionFilter: IExceptionFilter,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
+		@inject(TYPES.UserService) private userService: IUserService,
 		@inject(TYPES.MongoService) private mongoService: MongoService,
+		@inject(TYPES.UserController) private userController: UserController,
 	) {
 		this.app = express();
 		this.port = Number(this.configService.get('PORT'));
@@ -29,7 +34,7 @@ export class App {
 	}
 
 	useRoutes(): void {
-		// this.app.use('/users', this.userController)
+		this.app.use('/user', this.userController.router);
 	}
 
 	useExceptionFilters(): void {
