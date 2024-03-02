@@ -23,8 +23,7 @@
     "inversify": "^6.0.2",
     "mongoose": "^8.2.0",
     "reflect-metadata": "^0.2.1",
-    "tslog": "^3.2.2",
-    "uuid": "^9.0.1"
+    "tslog": "^3.2.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
