@@ -6,6 +6,7 @@ import { ILogger } from '../interfaces/logger.service.interface';
 import { IConfigService } from '../interfaces/config.interface';
 import { NextFunction, Request, Response } from 'express';
 import { IUserService } from '../interfaces/user.service.interface';
+import { HTTPError } from '../helpers/errors/http-error.class';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
@@ -31,7 +32,13 @@ export class UserController extends BaseController implements IUserController {
 		]);
 	}
 
-	async register(req: Request, res: Response, next: NextFunction): Promise<void> {}
+	async register({ body }: Request, res: Response, next: NextFunction): Promise<void> {
+		const result = await this.userService.createUser(body);
+		if (!result) {
+			return next(new HTTPError(422, 'Такой пользователь уже существует', 'register'));
+		}
+		this.ok(res, { email: result.email, id: result.id });
+	}
 
 	async login(req: Request, res: Response, next: NextFunction): Promise<void> {
 		// const result = await this.userService
