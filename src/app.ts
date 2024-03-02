@@ -7,6 +7,7 @@ import { json } from 'body-parser';
 import { IExceptionFilter } from './interfaces/exception.filter.interface';
 import 'reflect-metadata';
 import { IConfigService } from './interfaces/config.interface';
+import { MongoService } from './services/db.service';
 @injectable()
 export class App {
 	app: Express;
@@ -17,6 +18,7 @@ export class App {
 		@inject(TYPES.LoggerService) private logger: ILogger,
 		@inject(TYPES.ExceptionFilter) private exceptionFilter: IExceptionFilter,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
+		@inject(TYPES.MongoService) private mongoService: MongoService,
 	) {
 		this.app = express();
 		this.port = Number(this.configService.get('PORT'));
@@ -33,6 +35,7 @@ export class App {
 	public async init(): Promise<void> {
 		this.useMiddleware();
 		this.useRoutes();
+		await this.mongoService.connect();
 		this.server = this.app.listen(this.port);
 		this.logger.log(`Server has been started on http://localhost:${this.port}`);
 	}
