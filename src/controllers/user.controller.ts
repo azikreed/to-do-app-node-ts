@@ -5,14 +5,16 @@ import { TYPES } from '../types';
 import { ILogger } from '../interfaces/logger.service.interface';
 import { IConfigService } from '../interfaces/config.interface';
 import { NextFunction, Request, Response } from 'express';
+import { IUserService } from '../interfaces/user.service.interface';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
 	constructor(
-		@inject(TYPES.LoggerService) private logger: ILogger,
+		@inject(TYPES.LoggerService) private loggerService: ILogger,
+		@inject(TYPES.UserService) private userService: IUserService,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
 	) {
-		super(logger);
+		super(loggerService);
 		this.bindRoutes([
 			{
 				path: '/register',
@@ -29,11 +31,13 @@ export class UserController extends BaseController implements IUserController {
 		]);
 	}
 
+	async register(req: Request, res: Response, next: NextFunction): Promise<void> {}
+
 	async login(req: Request, res: Response, next: NextFunction): Promise<void> {
 		// const result = await this.userService
 	}
 
-	async register(req: Request, res: Response, next: NextFunction): Promise<void> {
+	async info(req: Request, res: Response, next: NextFunction): Promise<void> {
 		// id
 	}
 }
