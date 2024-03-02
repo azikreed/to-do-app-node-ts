@@ -37,14 +37,10 @@ export class UserController extends BaseController implements IUserController {
 		if (!result) {
 			return next(new HTTPError(422, 'Такой пользователь уже существует', 'register'));
 		}
-		this.ok(res, { email: result.email, id: result.id });
+		this.ok(res, { id: result._id, email: result.email, name: result.name });
 	}
 
 	async login(req: Request, res: Response, next: NextFunction): Promise<void> {
 		// const result = await this.userService
-	}
-
-	async info(req: Request, res: Response, next: NextFunction): Promise<void> {
-		// id
 	}
 }
