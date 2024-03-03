@@ -1,7 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 import { IUserModel } from '../../interfaces/user.model.interface';
 
-const userSchema = new Schema({
+const userSchema = new Schema<IUserModel>({
 	email: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
 	name: { type: String, required: true },
