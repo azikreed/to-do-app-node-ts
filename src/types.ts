@@ -7,4 +7,7 @@ export const TYPES = {
 	UserService: Symbol.for('UserService'),
 	MongoService: Symbol.for('MongoService'),
 	UserController: Symbol.for('UserController'),
+	TaskController: Symbol.for('TaskController'),
+	TaskService: Symbol.for('TaskService'),
+	TaskRepository: Symbol.for('TaskRepository'),
 };
