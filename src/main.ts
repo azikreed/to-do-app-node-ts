@@ -14,6 +14,12 @@ import { UserService } from './services/user.service';
 import { IUserService } from './interfaces/user.service.interface';
 import { UserRepository } from './repositories/user.repository';
 import { IUserRepository } from './interfaces/user.repository.interface';
+import { ITaskService } from './interfaces/task.service.interface';
+import { TaskService } from './services/task.service';
+import { TaskRepository } from './repositories/task.repository';
+import { ITaskRepository } from './interfaces/task.repository.interface';
+import { ITaskController } from './interfaces/task.controller.interface';
+import { TaskController } from './controllers/task.controller';
 
 const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ILogger>(TYPES.LoggerService).to(LoggerService).inSingletonScope();
@@ -22,6 +28,9 @@ const appBindings = new ContainerModule((bind: interfaces.Bind) => {
 	bind<IUserRepository>(TYPES.UserRepository).to(UserRepository);
 	bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();
 	bind<IUserService>(TYPES.UserService).to(UserService).inSingletonScope();
+	bind<ITaskController>(TYPES.TaskController).to(TaskController);
+	bind<ITaskService>(TYPES.TaskService).to(TaskService).inSingletonScope();
+	bind<ITaskRepository>(TYPES.TaskRepository).to(TaskRepository);
 	bind<MongoService>(TYPES.MongoService).to(MongoService).inSingletonScope();
 	bind<App>(TYPES.Application).to(App);
 });

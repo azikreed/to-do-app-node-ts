@@ -12,6 +12,7 @@ import { IUserController } from './interfaces/user.controller.interface';
 import { UserController } from './controllers/user.controller';
 import { IUserService } from './interfaces/user.service.interface';
 import { AuthMiddleware } from './middlewares/auth.middleware';
+import { TaskController } from './controllers/task.controller';
 @injectable()
 export class App {
 	app: Express;
@@ -24,6 +25,7 @@ export class App {
 		@inject(TYPES.ConfigService) private configService: IConfigService,
 		@inject(TYPES.MongoService) private mongoService: MongoService,
 		@inject(TYPES.UserController) private userController: UserController,
+		@inject(TYPES.TaskController) private taskController: TaskController,
 	) {
 		this.app = express();
 		this.port = Number(this.configService.get('PORT'));
@@ -37,6 +39,7 @@ export class App {
 
 	useRoutes(): void {
 		this.app.use('/user', this.userController.router);
+		this.app.use('/task', this.taskController.router);
 	}
 
 	useExceptionFilters(): void {
