@@ -8,9 +8,7 @@ import { IExceptionFilter } from './interfaces/exception.filter.interface';
 import 'reflect-metadata';
 import { IConfigService } from './interfaces/config.interface';
 import { MongoService } from './services/db.service';
-import { IUserController } from './interfaces/user.controller.interface';
 import { UserController } from './controllers/user.controller';
-import { IUserService } from './interfaces/user.service.interface';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { TaskController } from './controllers/task.controller';
 @injectable()
@@ -56,6 +54,7 @@ export class App {
 	}
 
 	public close(): void {
+		this.mongoService.disconnect();
 		this.server.close();
 	}
 }
