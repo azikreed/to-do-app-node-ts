@@ -8,4 +8,5 @@ export interface ITaskService {
 	getAll: (email: string) => Promise<Promise<ITaskModel | null>[]>;
 	// getOne: (id: ObjectId) => Promise<ITaskModel | null>;
 	updateTask: (id: mongoose.Types.ObjectId, data: ITaskUpdate) => Promise<ITaskModel | null>;
+	deleteTask: (id: mongoose.Types.ObjectId) => Promise<boolean | null>;
 }
