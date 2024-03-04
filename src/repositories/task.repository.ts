@@ -32,6 +32,6 @@ export class TaskRepository implements ITaskRepository {
 	}
 
 	async delete(id: mongoose.Types.ObjectId): Promise<boolean | null> {
-		return await TaskModel.findById(id);
+		return await TaskModel.findByIdAndDelete(id);
 	}
 }
