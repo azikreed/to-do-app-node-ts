@@ -39,6 +39,12 @@ export class TaskController extends BaseController implements ITaskController {
 				func: this.update,
 				middlewares: [new AuthGuard()],
 			},
+			{
+				path: '/delete/:id',
+				method: 'delete',
+				func: this.delete,
+				middlewares: [new AuthGuard()],
+			},
 		]);
 	}
 
@@ -64,6 +70,23 @@ export class TaskController extends BaseController implements ITaskController {
 			const objectId = new mongoose.Types.ObjectId(id);
 			const update = { ...req.body, updatedAt: new Date() };
 			const result = await this.taskService.updateTask(objectId, update);
+			if (!result) {
+				return next(new HTTPError(422, 'Что-то пошло не так!', 'update'));
+			}
+			this.ok(res, result);
+		} catch (e) {
+			this.send(res, 400, 'Invalid request');
+			this.loggerService.error(
+				'[UpdateTask] проблема при конвертации id на objectId, проверьте наличие object id в req.params',
+			);
+		}
+	}
+
+	async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+		const { id } = req.params;
+		try {
+			const objectId = new mongoose.Types.ObjectId(id);
+			const result = await this.taskService.deleteTask(objectId);
 			if (!result) {
 				return next(new HTTPError(422, 'Что-то пошло не так!', 'update'));
 			}
