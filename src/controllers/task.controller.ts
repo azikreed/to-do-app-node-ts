@@ -10,6 +10,7 @@ import { ValidateMiddleware } from '../middlewares/validate.middleware';
 import { TaskCreateDto } from '../services/dto/task.dto';
 import { AuthGuard } from '../middlewares/auth.guard.middleware';
 import { IUserService } from '../interfaces/user.service.interface';
+import mongoose from 'mongoose';
 
 @injectable()
 export class TaskController extends BaseController implements ITaskController {
@@ -32,6 +33,12 @@ export class TaskController extends BaseController implements ITaskController {
 				func: this.getAll,
 				middlewares: [new AuthGuard()],
 			},
+			{
+				path: '/update/:id',
+				method: 'patch',
+				func: this.update,
+				middlewares: [new AuthGuard()],
+			},
 		]);
 	}
 
@@ -49,5 +56,22 @@ export class TaskController extends BaseController implements ITaskController {
 			return next(new HTTPError(422, 'Что-то пошло не так!', 'create'));
 		}
 		this.ok(res, result);
+	}
+
+	async update(req: Request, res: Response, next: NextFunction): Promise<void> {
+		const { id } = req.params;
+		try {
+			const objectId = new mongoose.Types.ObjectId(id);
+			const result = await this.taskService.updateTask(objectId, req.body);
+			if (!result) {
+				return next(new HTTPError(422, 'Что-то пошло не так!', 'update'));
+			}
+			this.ok(res, result);
+		} catch (e) {
+			this.send(res, 400, 'Invalid request');
+			this.loggerService.error(
+				'[UpdateTask] проблема при конвертации id на objectId, проверьте наличие object id в req.params',
+			);
+		}
 	}
 }
