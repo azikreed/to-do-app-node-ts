@@ -34,6 +34,12 @@ export class TaskController extends BaseController implements ITaskController {
 				middlewares: [new AuthGuard()],
 			},
 			{
+				path: '/get/:id',
+				method: 'get',
+				func: this.getOne,
+				middlewares: [new AuthGuard()],
+			},
+			{
 				path: '/update/:id',
 				method: 'patch',
 				func: this.update,
@@ -64,6 +70,25 @@ export class TaskController extends BaseController implements ITaskController {
 		this.ok(res, result);
 	}
 
+	async getOne(req: Request, res: Response, next: NextFunction): Promise<void> {
+		const { id } = req.params;
+		try {
+			const objectId = new mongoose.Types.ObjectId(id);
+			const result = await this.taskService.findTask(objectId);
+			if (!result) {
+				return next(
+					new HTTPError(422, 'Что-то пошло не так или такое задание не существует', 'get one'),
+				);
+			}
+			this.ok(res, result);
+		} catch (e) {
+			this.send(res, 400, 'Invalid request');
+			this.loggerService.error(
+				'[UpdateTask] проблема при конвертации id на objectId, проверьте наличие object id в req.params',
+			);
+		}
+	}
+
 	async update(req: Request, res: Response, next: NextFunction): Promise<void> {
 		const { id } = req.params;
 		try {
@@ -71,7 +96,9 @@ export class TaskController extends BaseController implements ITaskController {
 			const update = { ...req.body, updatedAt: new Date() };
 			const result = await this.taskService.updateTask(objectId, update);
 			if (!result) {
-				return next(new HTTPError(422, 'Что-то пошло не так!', 'update'));
+				return next(
+					new HTTPError(404, 'Что-то пошло не так или такое задание не существует', 'update'),
+				);
 			}
 			this.ok(res, result);
 		} catch (e) {
@@ -88,7 +115,9 @@ export class TaskController extends BaseController implements ITaskController {
 			const objectId = new mongoose.Types.ObjectId(id);
 			const result = await this.taskService.deleteTask(objectId);
 			if (!result) {
-				return next(new HTTPError(422, 'Что-то пошло не так!', 'update'));
+				return next(
+					new HTTPError(404, 'Что-то пошло не так или такое задание не существует', 'delete'),
+				);
 			}
 			this.ok(res, result);
 		} catch (e) {
