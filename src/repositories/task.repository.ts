@@ -19,7 +19,7 @@ export class TaskRepository implements ITaskRepository {
 		return await task.save();
 	}
 
-	async find(id: ObjectId): Promise<ITaskModel | null> {
+	async find(id: mongoose.Types.ObjectId): Promise<ITaskModel | null> {
 		return await TaskModel.findOne({ _id: id });
 	}
 
@@ -27,11 +27,16 @@ export class TaskRepository implements ITaskRepository {
 		return await TaskModel.find({ user: userId });
 	}
 
+	async getOne(id: mongoose.Types.ObjectId): Promise<ITaskModel | null> {
+		return await TaskModel.findOne({ _id: id });
+	}
+
 	async update(id: mongoose.Types.ObjectId, data: ITaskUpdate): Promise<ITaskModel | null> {
 		return await TaskModel.findOneAndUpdate({ _id: id }, { $set: data }, { new: true });
 	}
 
-	async delete(id: mongoose.Types.ObjectId): Promise<boolean | null> {
-		return await TaskModel.findByIdAndDelete(id);
+	async delete(id: mongoose.Types.ObjectId): Promise<boolean> {
+		const { deletedCount } = await TaskModel.deleteOne(id);
+		return Boolean(deletedCount);
 	}
 }
