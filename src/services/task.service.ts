@@ -33,7 +33,10 @@ export class TaskService implements ITaskService {
 	}
 
 	async updateTask(id: mongoose.Types.ObjectId, data: ITaskUpdate): Promise<ITaskModel | null> {
-		const user = await this.taskRepository.update(id, data);
-		return user;
+		return await this.taskRepository.update(id, data);
+	}
+
+	async deleteTask(id: mongoose.Types.ObjectId): Promise<boolean | null> {
+		return await this.taskRepository.delete(id);
 	}
 }
