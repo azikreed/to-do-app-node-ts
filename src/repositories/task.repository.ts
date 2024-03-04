@@ -30,4 +30,8 @@ export class TaskRepository implements ITaskRepository {
 	async update(id: mongoose.Types.ObjectId, data: ITaskUpdate): Promise<ITaskModel | null> {
 		return await TaskModel.findOneAndUpdate({ _id: id }, { $set: data }, { new: true });
 	}
+
+	async delete(id: mongoose.Types.ObjectId): Promise<boolean | null> {
+		return await TaskModel.findById(id);
+	}
 }
