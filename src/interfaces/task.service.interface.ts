@@ -6,7 +6,7 @@ import { ITaskUpdate } from './task.update.interface';
 export interface ITaskService {
 	createTask: (dto: TaskCreateDto) => Promise<ITaskModel | null>;
 	getAll: (email: string) => Promise<Promise<ITaskModel | null>[]>;
-	// getOne: (id: ObjectId) => Promise<ITaskModel | null>;
+	findTask: (id: mongoose.Types.ObjectId) => Promise<ITaskModel | null>;
 	updateTask: (id: mongoose.Types.ObjectId, data: ITaskUpdate) => Promise<ITaskModel | null>;
-	deleteTask: (id: mongoose.Types.ObjectId) => Promise<boolean | null>;
+	deleteTask: (id: mongoose.Types.ObjectId) => Promise<boolean>;
 }
