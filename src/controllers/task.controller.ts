@@ -62,7 +62,8 @@ export class TaskController extends BaseController implements ITaskController {
 		const { id } = req.params;
 		try {
 			const objectId = new mongoose.Types.ObjectId(id);
-			const result = await this.taskService.updateTask(objectId, req.body);
+			const update = { ...req.body, updatedAt: new Date() };
+			const result = await this.taskService.updateTask(objectId, update);
 			if (!result) {
 				return next(new HTTPError(422, 'Что-то пошло не так!', 'update'));
 			}
