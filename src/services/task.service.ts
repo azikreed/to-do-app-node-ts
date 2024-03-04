@@ -32,11 +32,15 @@ export class TaskService implements ITaskService {
 		return await this.taskRepository.getAll(user?._id);
 	}
 
+	async findTask(id: mongoose.Types.ObjectId): Promise<ITaskModel | null> {
+		return await this.taskRepository.find(id);
+	}
+
 	async updateTask(id: mongoose.Types.ObjectId, data: ITaskUpdate): Promise<ITaskModel | null> {
 		return await this.taskRepository.update(id, data);
 	}
 
-	async deleteTask(id: mongoose.Types.ObjectId): Promise<boolean | null> {
+	async deleteTask(id: mongoose.Types.ObjectId): Promise<boolean> {
 		return await this.taskRepository.delete(id);
 	}
 }
