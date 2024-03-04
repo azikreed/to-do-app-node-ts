@@ -5,8 +5,9 @@ import { TYPES } from '../types';
 import { TaskCreateDto } from './dto/task.dto';
 import { ITaskModel } from '../interfaces/task.model.interface';
 import { Task } from '../entities/task.entity';
-import { ObjectId } from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 import { IUserRepository } from '../interfaces/user.repository.interface';
+import { ITaskUpdate } from '../interfaces/task.update.interface';
 
 @injectable()
 export class TaskService implements ITaskService {
@@ -29,5 +30,10 @@ export class TaskService implements ITaskService {
 	async getAll(email: string): Promise<Promise<ITaskModel | null>[]> {
 		const user = await this.userRepository.find(email);
 		return await this.taskRepository.getAll(user?._id);
+	}
+
+	async updateTask(id: mongoose.Types.ObjectId, data: ITaskUpdate): Promise<ITaskModel | null> {
+		const user = await this.taskRepository.update(id, data);
+		return user;
 	}
 }
