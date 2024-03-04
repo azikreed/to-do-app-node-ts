@@ -8,5 +8,5 @@ export interface ITaskRepository {
 	getAll: (userId: ObjectId) => Promise<Promise<ITaskModel | null>[]>;
 	find: (id: ObjectId) => Promise<ITaskModel | null>;
 	update: (id: mongoose.Types.ObjectId, data: ITaskUpdate) => Promise<ITaskModel | null>;
-	// delete: (id: ObjectId) => Promise<boolean>;
+	delete: (id: mongoose.Types.ObjectId) => Promise<boolean | null>;
 }
