@@ -11,6 +11,7 @@ import { MongoService } from './services/db.service';
 import { UserController } from './controllers/user.controller';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { TaskController } from './controllers/task.controller';
+import cors from 'cors';
 @injectable()
 export class App {
 	app: Express;
@@ -31,6 +32,7 @@ export class App {
 
 	useMiddleware(): void {
 		this.app.use(json());
+		this.app.use(cors());
 		const authMiddleware = new AuthMiddleware(this.configService.get('SECRET'));
 		this.app.use(authMiddleware.execute.bind(authMiddleware));
 	}
