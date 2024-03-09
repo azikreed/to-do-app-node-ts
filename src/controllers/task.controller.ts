@@ -59,7 +59,13 @@ export class TaskController extends BaseController implements ITaskController {
 		if (!result) {
 			return next(new HTTPError(422, 'Что-то пошло не так!', 'create'));
 		}
-		this.ok(res, { ...result });
+		this.ok(res, {
+			_id: result._id,
+			title: result.title,
+			description: result.description,
+			deadline: result.deadline,
+			user: result.user,
+		});
 	}
 
 	async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -80,7 +86,13 @@ export class TaskController extends BaseController implements ITaskController {
 					new HTTPError(422, 'Что-то пошло не так или такое задание не существует', 'get one'),
 				);
 			}
-			this.ok(res, result);
+			this.ok(res, {
+				_id: result._id,
+				title: result.title,
+				description: result.description,
+				deadline: result.deadline,
+				user: result.user,
+			});
 		} catch (e) {
 			this.send(res, 400, 'Invalid request');
 			this.loggerService.error(
