@@ -48,7 +48,8 @@ export class UserController extends BaseController implements IUserController {
 		if (!result) {
 			return next(new HTTPError(422, 'Такой пользователь уже существует', 'register'));
 		}
-		this.ok(res, { id: result._id, email: result.email, name: result.name });
+		const token = await this.signJWT(body.email, this.configService.get('SECRET'));
+		this.ok(res, { id: result._id, email: result.email, name: result.name, token: token });
 	}
 
 	async login(req: Request, res: Response, next: NextFunction): Promise<void> {
