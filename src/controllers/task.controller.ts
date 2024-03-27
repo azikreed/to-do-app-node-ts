@@ -65,6 +65,7 @@ export class TaskController extends BaseController implements ITaskController {
 		if (!result) {
 			return next(new HTTPError(422, 'Что-то пошло не так!', 'create'));
 		}
+
 		this.ok(res, {
 			_id: result._id,
 			title: result.title,
