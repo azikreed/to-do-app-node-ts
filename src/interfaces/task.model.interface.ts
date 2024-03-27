@@ -5,6 +5,7 @@ export interface ITaskModel extends Document {
 	title: string;
 	description: string;
 	deadline: Date;
+	done: boolean;
 	createdAt: Date;
 	updatedAt: Date;
 	user: ObjectId | IUserModel;

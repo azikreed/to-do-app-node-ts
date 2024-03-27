@@ -1,4 +1,4 @@
-import { IsDate, IsDateString, IsString } from 'class-validator';
+import { IsBoolean, IsDate, IsDateString, IsString } from 'class-validator';
 import { ObjectId, isObjectIdOrHexString } from 'mongoose';
 
 export class TaskCreateDto {
@@ -8,5 +8,6 @@ export class TaskCreateDto {
 	description: string;
 	@IsDateString({}, { message: 'Неверно указан дедлайн' })
 	deadline: string;
+
 	user: string;
 }

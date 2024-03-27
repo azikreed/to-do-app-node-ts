@@ -6,6 +6,7 @@ export class Task {
 		private readonly _description: string,
 		private readonly _deadline: string,
 		private readonly _user: ObjectId,
+		private readonly _done?: boolean,
 	) {}
 
 	get title(): string {
@@ -22,5 +23,9 @@ export class Task {
 
 	get user(): ObjectId {
 		return this._user;
+	}
+
+	get done(): boolean | undefined {
+		return this._done;
 	}
 }

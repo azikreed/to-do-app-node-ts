@@ -5,6 +5,7 @@ const taskSchema = new Schema<ITaskModel>({
 	title: { type: String, required: true },
 	description: { type: String, required: true },
 	deadline: { type: Date, required: true },
+	done: { type: Boolean, required: true, default: false },
 	createdAt: { type: Date, default: Date.now },
 	updatedAt: { type: Date, default: Date.now },
 	user: { type: Schema.Types.ObjectId, ref: 'User', required: true },

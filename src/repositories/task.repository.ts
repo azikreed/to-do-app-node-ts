@@ -9,11 +9,12 @@ import { ITaskUpdate } from '../interfaces/task.update.interface';
 export class TaskRepository implements ITaskRepository {
 	constructor() {}
 
-	async create({ title, description, deadline, user }: Task): Promise<ITaskModel> {
+	async create({ title, description, deadline, done, user }: Task): Promise<ITaskModel> {
 		const task = new TaskModel({
 			title,
 			description,
 			deadline,
+			done,
 			user,
 		});
 		return await task.save();
