@@ -34,6 +34,12 @@ export class TaskController extends BaseController implements ITaskController {
 				middlewares: [new AuthGuard()],
 			},
 			{
+				path: '/done',
+				method: 'get',
+				func: this.getDone,
+				middlewares: [new AuthGuard()],
+			},
+			{
 				path: '/get/:id',
 				method: 'get',
 				func: this.getOne,
@@ -70,6 +76,14 @@ export class TaskController extends BaseController implements ITaskController {
 
 	async getAll(req: Request, res: Response, next: NextFunction): Promise<void> {
 		const result = await this.taskService.getAll(req.user);
+		if (!result) {
+			return next(new HTTPError(422, 'Что-то пошло не так!', 'create'));
+		}
+		this.ok(res, result);
+	}
+
+	async getDone(req: Request, res: Response, next: NextFunction): Promise<void> {
+		const result = await this.taskService.getAll(req.user, { done: true });
 		if (!result) {
 			return next(new HTTPError(422, 'Что-то пошло не так!', 'create'));
 		}

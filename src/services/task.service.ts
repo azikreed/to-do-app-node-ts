@@ -27,9 +27,9 @@ export class TaskService implements ITaskService {
 		return this.taskRepository.create(newTask);
 	}
 
-	async getAll(email: string): Promise<Promise<ITaskModel | null>[]> {
+	async getAll(email: string, condition?: object): Promise<Promise<ITaskModel | null>[]> {
 		const user = await this.userRepository.find(email);
-		return await this.taskRepository.getAll(user?._id);
+		return await this.taskRepository.getAll(user?._id, condition);
 	}
 
 	async findTask(id: mongoose.Types.ObjectId): Promise<ITaskModel | null> {
