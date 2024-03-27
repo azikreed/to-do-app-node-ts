@@ -25,7 +25,7 @@ export class TaskRepository implements ITaskRepository {
 	}
 
 	async getAll(userId: ObjectId): Promise<Promise<ITaskModel | null>[]> {
-		return await TaskModel.find({ user: userId });
+		return await TaskModel.find({ user: userId, done: false });
 	}
 
 	async getOne(id: mongoose.Types.ObjectId): Promise<ITaskModel | null> {
